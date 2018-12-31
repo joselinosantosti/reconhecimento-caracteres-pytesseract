@@ -1,34 +1,28 @@
+#Objetivo: extrair dados de uma determinada regiao de documentos em formato de imagem
+#Nesse projeto todas as imagens são iguais apenas para simulacao, pode ser aplicado em documentos com pequenas alteracoes como a data
 import cv2
 import glob
 import os
-import requests
 import pytesseract as pt
-import matplotlib as plt
 
-#varredura nas imagens
+#varredura na psta com as imagens imagens
 for path in glob.glob("docs/*.jpg"):
 	image = cv2.imread(path)
-	#altura, largura, profundidade
-	#print(image.shape)
-	#print(image)
-
-	#_, ax1 = plt.subplots(figsize=(20,10))
-	#ax1.imshow(image)
-
+	
 	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-	#print(gray.shape)
-	#cv2.imshow("Cortada",gray)
-
-	#cortando a imagem
+	
+	#cortando a regiao com a data
 	t_y,b_y,l_x = 145, 210, 270
 	data = gray[t_y:b_y,l_x:]
 
 	#reconhecendo os caracteres com pytesseract
 	texto = pt.image_to_string(data)
 	print("Data: ", texto)
-	#cv2.imshow("Cortada",data)
-	#cv2.waitKey(0)
-	#cv2.destroyAllWindows()
+	
+	#exibe a imagem recortada com a regiao de interesse
+	cv2.imshow("Cortada",data)
+	cv2.waitKey(0)
+	cv2.destroyAllWindows()
 
 
 
